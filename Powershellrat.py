@@ -48,4 +48,11 @@ def menu():
 
 		except ValueError:
 			sys.exit(0)
-		
+
+# check host is using windows or not
+def checkHostWindows():
+	if os.name == "nt":
+		print ('[+] All good...')
+	else:
+		print('[!= Please run the application on windows machine ')
+		sys.exit(0)
