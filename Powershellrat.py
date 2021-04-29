@@ -120,3 +120,25 @@ cmds = {
 	"8" : cmd_HailMary,
 	"9" : lambda: sys.exit(0)
 }
+
+# main function
+def main():
+	os.system('cls')
+	print (logo())
+	checkHostWindows()
+	try:
+		while True:
+			choice = input("\n%s" % OPTIONS)
+			if choice not in cmds:
+				print ('[!] Invalid Choice')
+				continue
+			cmds.get(choice)()
+	except KeyboardInterrupt:
+		print ('[!] Ctrl + C detected\n[!] Exiting')
+		sys.exit(0)
+	except EOFError:
+		print ('[!] Ctrl + D detected\n[!] Exiting')
+		sys.exit(0)
+
+if __name__ == "__main__":
+	main()
